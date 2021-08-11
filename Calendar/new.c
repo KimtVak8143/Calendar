@@ -5,8 +5,8 @@
 
 //function declarations 
 void diff(date, date); // to calculate the difference between 2 dates - day wise, month wise, year wise
-void show(date, date); // to show the calendar dates
-void check(date, date); // to check for correct data
+void show(date); // to show the calendar dates
+int check(date, date); // to check for correct data
 void input(date, date); // to take input data for operations
 
 //structure declaration
@@ -17,12 +17,13 @@ typedef struct D
 }date;
 //date d1,d2;
 
-void main()
+int main()
 {   printf("Hello\n");
-    date a,b;;
+    date a,b;
     input(a,b);
-    show(a,b);
-
+    if(check(a,b)!=0)
+        return 0;
+    show(b);
 }
 
 void input(date d1,date d2) // for input of data
@@ -50,7 +51,7 @@ void diff(date x,date y) // to calculate the difference between 2 dates - day wi
     d.year= abs(y.year-x.year);
 
 }
-void show(date x,date y)  //to show the calendar dates
+void show(date y)  //to show the calendar dates
 {   int i;
     char *days[10]={"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
     for(i=0;i<7;i++)
@@ -59,26 +60,47 @@ void show(date x,date y)  //to show the calendar dates
     for(i=1;i<=31;i++)
     {   if(i%7==1)
             printf("\n");
-        printf("%d  ",i);
+        if(i==y.day)
+            printf("%d/*  ",i);
+        else
+            printf("%d  ",i);
     }
 }
 
-void check(date c1,date c2)  // to check for correct data
-{   // Check for days
+int check(date c1,date c2)  // to check for correct data
+{   int flag =0;
+    // Check for days
     if(c1.day <0 || c1.day>31)
-        printf("Invalid Date 1");
+    {   printf("Invalid Date 1");
+        flag++;
+    }
     if(c2.day <0 || c2.day>31)
-        printf("Invalid Date 2");
+    {   printf("Invalid Date 2");
+        flag++;
+    }
 
     // Check for months
     if(c1.month<0 || c1.month>12)
-        printf("Invalid Month 1");
+    {   printf("Invalid Month 1");
+        flag++;
+    }
     if(c2.month<0 || c2.month>12)
-        printf("Invalid Month 2");
-        
+    {   printf("Invalid Month 2");
+        flag++;
+    }
+
     // Check for years
     if(c1.year<0)
-        printf("Invalid Year 1");
+    {   printf("Invalid Year 1");
+        flag++;
+    }
     if(c2.year<0)
-        printf("Invalid Year 2");
+    {   printf("Invalid Year 2");
+        flag++;
+    }
+    if(flag>0) 
+        printf("All Data entries are correct and verified\n");
+    else
+        printf("There are %d Invalid data entries, Try again !\n",flag);
+    return flag;
 }
