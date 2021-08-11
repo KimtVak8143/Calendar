@@ -12,7 +12,7 @@ void input(date, date); // to take input data for operations
 //structure declaration
 typedef struct D
 {   int day;
-    char month[10];
+    int month;
     int year;
 }date;
 //date d1,d2;
